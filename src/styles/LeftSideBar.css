@@ -1,0 +1,222 @@
+.ls {
+  background-color: #001030;
+  color: white;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.ls-top {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ls-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.icons-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.weChat,
+.menu {
+  font-size: 24px;
+  margin-right: 10px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+.ls-search {
+  background-color: steelblue;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.search {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.ls-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+  width: 100%;
+}
+
+.ls-search input::placeholder {
+  color: white;
+}
+
+.ls-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.friends {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.friends div {
+  display: flex;
+  flex-direction: column;
+}
+
+.friends p {
+  color: aqua;
+}
+
+.friends span {
+  color: #9f9f9f;
+  font-size: 12px;
+}
+
+.friends:hover {
+  background-color: #077eff;
+}
+
+.friends:hover span {
+  color: white;
+}
+
+.ls-nav .menu {
+  position: relative;
+  padding: 10px 0px;
+}
+
+.menu-icon {
+  cursor: pointer;
+}
+
+.menu .sub-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 130px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  display: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sub-menu hr {
+  border: none;
+  height: 1px;
+  margin: 8px 0;
+  background: #a4a4a4;
+}
+
+.sub-menu p {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+.menu:hover .sub-menu {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .ls {
+    height: auto;
+    padding: 5px;
+  }
+
+  .ls-top {
+    padding: 10px;
+  }
+
+  .weChat,
+  .menu {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+
+  .ls-search {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .ls-search input {
+    font-size: 13px;
+  }
+
+  .friends {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .friends span {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ls {
+    height: auto;
+    width: 100%;
+    padding: 5px;
+  }
+
+  .ls-top {
+    padding: 8px;
+  }
+
+  .weChat,
+  .menu {
+    font-size: 18px;
+    padding: 5px 8px;
+  }
+
+  .ls-search {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .ls-search input {
+    font-size: 12px;
+  }
+
+  .friends {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .friends span {
+    font-size: 10px;
+  }
+
+  .menu .sub-menu {
+    width: 110px;
+    padding: 15px;
+  }
+
+  .sub-menu p {
+    font-size: 13px;
+  }
+}

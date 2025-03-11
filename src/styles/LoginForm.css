@@ -1,0 +1,111 @@
+.login {
+  min-height: 100vh;
+  background: url(/src/assets/background.webp) no-repeat center top/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-form {
+  color: cornsilk;
+  background: linear-gradient(skyblue, rgb(18, 82, 134));
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-form h2 {
+  color: #fff;
+  font-weight: 800;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.login-form .btn {
+  background-color: steelblue;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-form .btn:hover {
+  background-color: #004080;
+}
+
+.login-toggle {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.login-toggle span {
+  font-weight: 500;
+  cursor: pointer;
+  color: steelblue;
+  transition: color 0.3s ease;
+}
+
+.login-toggle span:hover {
+  color: #004080;
+}
+
+@media (max-width: 768px) {
+  .login {
+    padding: 10px;
+  }
+
+  .login-form {
+    max-width: 300px;
+    padding: 15px 25px;
+  }
+
+  .form-input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login-form .btn {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    max-width: 270px;
+    padding: 15px;
+  }
+
+  .login-form h2 {
+    font-size: 20px;
+  }
+
+  .form-input {
+    font-size: 13px;
+    padding: 7px;
+  }
+
+  .login-form .btn {
+    padding: 7px;
+    font-size: 13px;
+  }
+
+  .login-toggle {
+    font-size: 12px;
+  }
+}
