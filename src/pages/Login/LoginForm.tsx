@@ -32,7 +32,7 @@ const LoginForm: React.FC = () => {
         (user) => user.userName === values.userName
       );
       if (existingUser) {
-        message.error("Username already taken!");
+        alert("Username already taken!");
         return;
       }
 
@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
       };
 
       dispatch(signUp(newUser));
-      message.success("User signed up successfully!");
+      alert("User signed up successfully!");
       setCurrentState("Login");
     } else {
       dispatch(login({ userName: values.userName, password: values.password }));
