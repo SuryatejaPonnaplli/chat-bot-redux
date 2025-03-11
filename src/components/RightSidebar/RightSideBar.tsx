@@ -29,7 +29,7 @@ const RightSideBar: React.FC = () => {
       <div className="rs-profile">
         <img src={profilepic} alt="Profile" />
         <h3>
-          {currentUser?.userName.toUpperCase() || "User"}
+          {currentUser?.userName || "User"}
           <img src={greendotbg} className="green-dot" alt="Online Status" />
         </h3>
         <p>{currentUser?.status || "Hey there, I am using the chat app"}</p>

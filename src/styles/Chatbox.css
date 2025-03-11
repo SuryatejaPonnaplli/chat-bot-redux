@@ -100,6 +100,31 @@
   background-color: #004080;
 }
 
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  margin: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar .search-icon {
+  color: #888;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+}
 /* Responsiveness */
 @media (max-width: 600px) {
   .chatbox {
@@ -117,5 +142,18 @@
 
   .chat-input button {
     padding: 6px 10px;
+  }
+  .search-bar {
+    margin: 5px;
+    padding: 6px;
+  }
+
+  .search-bar .search-icon {
+    font-size: 14px;
+  }
+
+  .search-bar input {
+    font-size: 12px;
+    padding: 6px;
   }
 }

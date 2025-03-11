@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { addMessage } from "../../features/messageSlice";
-import { UserOutlined, SendOutlined } from "@ant-design/icons";
+import { UserOutlined, SendOutlined, SearchOutlined } from "@ant-design/icons";
 import "../../styles/Chatbox.css";
 
 interface ChatBoxProps {
@@ -16,6 +16,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
   );
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [messageInput, setMessageInput] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const botReplies: { [key: string]: string[] } = {
     hi: ["Hi there! 👋", "Hello! How can I help you?", "Hey! 😊"],
@@ -36,14 +37,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
 
   const getBotReply = (message: string): string => {
     message = message.toLowerCase();
-
     for (let key in botReplies) {
       if (message.includes(key)) {
         const responses = botReplies[key];
         return responses[Math.floor(Math.random() * responses.length)];
       }
     }
-
     const defaultResponses = botReplies["default"];
     return defaultResponses[
       Math.floor(Math.random() * defaultResponses.length)
@@ -52,9 +51,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!currentUser || !selectedUser || messageInput.trim() === "") return;
-
     dispatch(
       addMessage({
         user: selectedUser,
@@ -64,10 +61,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
         },
       })
     );
-
     const userMessage = messageInput.trim();
     setMessageInput("");
-
     setTimeout(() => {
       const botResponse = getBotReply(userMessage);
       dispatch(
@@ -82,6 +77,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
     }, 1000);
   };
 
+  const filteredMessages = messages.filter((msg) =>
+    msg.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="chatbox">
       {selectedUser ? (
@@ -90,8 +89,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
             <UserOutlined className="user-icon" />
             <h3>{selectedUser}</h3>
           </div>
+          <div className="search-bar">
+            <SearchOutlined className="search-icon" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search messages..."
+            />
+          </div>
           <div className="chat-msg">
-            {messages.map((msg, index) => (
+            {filteredMessages.map((msg, index) => (
               <div
                 key={index}
                 className={
