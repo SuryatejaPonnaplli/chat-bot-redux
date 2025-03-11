@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import messagesReducer from "../features/messageSlice";
-import presenceReducer from "../features/presenceSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     messages: messagesReducer,
-    presence: presenceReducer,
   },
 });
 

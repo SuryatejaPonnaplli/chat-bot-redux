@@ -17,7 +17,7 @@ const RightSideBar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser); // Fix this line
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -29,7 +29,7 @@ const RightSideBar: React.FC = () => {
       <div className="rs-profile">
         <img src={profilepic} alt="Profile" />
         <h3>
-          {currentUser?.userName || "User"}
+          {currentUser?.userName.toUpperCase() || "User"}
           <img src={greendotbg} className="green-dot" alt="Online Status" />
         </h3>
         <p>{currentUser?.status || "Hey there, I am using the chat app"}</p>
