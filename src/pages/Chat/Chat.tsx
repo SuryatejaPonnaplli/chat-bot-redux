@@ -16,7 +16,6 @@ const Chat = () => {
       <div className="chat-container">
         <LeftSideBar onSelectUser={handleSelectUser} />
         <ChatBox selectedUser={selectedUser} />
-
         <RightSideBar />
       </div>
     </div>

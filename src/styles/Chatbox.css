@@ -125,7 +125,7 @@
   font-size: 14px;
   background: transparent;
 }
-/* Responsiveness */
+
 @media (max-width: 600px) {
   .chatbox {
     max-width: 100%;
