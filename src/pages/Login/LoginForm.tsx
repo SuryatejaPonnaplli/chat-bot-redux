@@ -31,8 +31,15 @@ const LoginForm: React.FC = () => {
       const existingUser = users.find(
         (user) => user.userName === values.userName
       );
+      const existingEmail = users.find((user) => user.email === values.email);
+
       if (existingUser) {
         alert("Username already taken!");
+        return;
+      }
+
+      if (existingEmail) {
+        alert("Email already registered!");
         return;
       }
 
@@ -47,16 +54,18 @@ const LoginForm: React.FC = () => {
       alert("User signed up successfully!");
       setCurrentState("Login");
     } else {
-      dispatch(login({ userName: values.userName, password: values.password }));
       const foundUser = users.find(
         (user) =>
           user.userName === values.userName && user.password === values.password
       );
 
       if (foundUser) {
+        dispatch(
+          login({ userName: values.userName, password: values.password })
+        );
         message.success("Login successful!");
       } else {
-        message.error("Invalid username or password");
+        alert("Invalid credentials! Please check your username and password.");
       }
     }
   };
