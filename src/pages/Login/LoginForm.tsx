@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -63,7 +63,7 @@ const LoginForm: React.FC = () => {
         dispatch(
           login({ userName: values.userName, password: values.password })
         );
-        message.success("Login successful!");
+        alert("Login successful!");
       } else {
         alert("Invalid credentials! Please check your username and password.");
       }
