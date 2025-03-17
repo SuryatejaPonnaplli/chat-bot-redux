@@ -19,7 +19,7 @@ const LoginForm: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   const [currentState, setCurrentState] = useState<"Login" | "Sign up">(
-    "Login"
+    "Sign up"
   );
 
   const onFinish = (values: {
