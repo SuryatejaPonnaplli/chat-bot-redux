@@ -3,7 +3,7 @@ import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
-import { login, signUp } from "../../features/authSlice";
+import { login, signUp } from "../../redux/auth/authSlice";
 import "../../styles/LoginForm.css";
 
 const LoginForm: React.FC = () => {
@@ -19,7 +19,7 @@ const LoginForm: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   const [currentState, setCurrentState] = useState<"Login" | "Sign up">(
-    "Sign up"
+    "Login"
   );
 
   const onFinish = (values: {

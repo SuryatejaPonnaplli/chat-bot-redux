@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { addMessage } from "../../features/messageSlice";
+import { addMessage } from "../../redux/messages/messageSlice";
 import { UserOutlined, SendOutlined, SearchOutlined } from "@ant-design/icons";
 import "../../styles/Chatbox.css";
 
