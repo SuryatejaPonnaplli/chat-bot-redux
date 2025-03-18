@@ -3,14 +3,30 @@ import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
-import { login, signUp } from "../../redux/auth/authSlice";
+import { loginRequest, signUpRequest } from "../../redux/auth/authSlice";
 import "../../styles/LoginForm.css";
 
 const LoginForm: React.FC = () => {
-  const navigate = useNavigate();
+  const { isAuthenticated, error, currentUser } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const users = useSelector((state: RootState) => state.auth.users);
+  const navigate = useNavigate();
+
+  const [currentState, setCurrentState] = useState<"Login" | "Sign up">(
+    "Login"
+  );
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (currentUser && currentState === "Sign up") {
+      form.setFieldsValue({
+        userName: currentUser.userName,
+        password: currentUser.password,
+      });
+      setCurrentState("Login");
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -18,31 +34,12 @@ const LoginForm: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const [currentState, setCurrentState] = useState<"Login" | "Sign up">(
-    "Login"
-  );
-
   const onFinish = (values: {
     userName: string;
     password: string;
     email?: string;
   }) => {
     if (currentState === "Sign up") {
-      const existingUser = users.find(
-        (user) => user.userName === values.userName
-      );
-      const existingEmail = users.find((user) => user.email === values.email);
-
-      if (existingUser) {
-        alert("Username already taken!");
-        return;
-      }
-
-      if (existingEmail) {
-        alert("Email already registered!");
-        return;
-      }
-
       const newUser = {
         userName: values.userName,
         password: values.password,
@@ -50,37 +47,32 @@ const LoginForm: React.FC = () => {
         status: "Hey there, I am using the chat app",
       };
 
-      dispatch(signUp(newUser));
-      alert("User signed up successfully!");
-      setCurrentState("Login");
+      dispatch(signUpRequest(newUser));
     } else {
-      const foundUser = users.find(
-        (user) =>
-          user.userName === values.userName && user.password === values.password
+      dispatch(
+        loginRequest({ userName: values.userName, password: values.password })
       );
-
-      if (foundUser) {
-        dispatch(
-          login({ userName: values.userName, password: values.password })
-        );
-        alert("Login successful!");
-      } else {
-        alert("Invalid credentials! Please check your username and password.");
-      }
     }
   };
 
+  const toggleForm = () => {
+    form.resetFields();
+    setCurrentState(currentState === "Login" ? "Sign up" : "Login");
+  };
+
+  // Form UI
   return (
     <div className="login">
-      <Form className="login-form" onFinish={onFinish}>
+      <Form form={form} className="login-form" onFinish={onFinish}>
         <h2>{currentState}</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+        {/* Show signup/login errors */}
         <Form.Item
           name="userName"
           rules={[{ required: true, message: "Enter username" }]}
         >
           <Input className="form-input" placeholder="Username" />
         </Form.Item>
-
         {currentState === "Sign up" && (
           <Form.Item
             name="email"
@@ -92,25 +84,18 @@ const LoginForm: React.FC = () => {
             <Input className="form-input" placeholder="Email" />
           </Form.Item>
         )}
-
         <Form.Item
           name="password"
           rules={[{ required: true, message: "Enter password" }]}
         >
           <Input.Password className="form-input" placeholder="Password" />
         </Form.Item>
-
         <Button className="btn" type="primary" htmlType="submit">
           {currentState}
         </Button>
-
         <p className="login-toggle">
           {currentState === "Login" ? "New user?" : "Already have an account?"}{" "}
-          <span
-            onClick={() =>
-              setCurrentState(currentState === "Login" ? "Sign up" : "Login")
-            }
-          >
+          <span onClick={toggleForm}>
             {currentState === "Login" ? "Sign up" : "Login"}
           </span>
         </p>

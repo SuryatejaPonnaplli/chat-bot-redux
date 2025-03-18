@@ -11,7 +11,7 @@ import image6 from "../../assets/image6.webp";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { logout } from "../../redux/auth/authSlice";
+import { logoutRequest } from "../../redux/auth/authSlice";
 
 const RightSideBar: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const RightSideBar: React.FC = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutRequest());
     navigate("/");
   };
 

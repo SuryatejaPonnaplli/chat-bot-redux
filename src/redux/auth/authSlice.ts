@@ -11,43 +11,53 @@ interface AuthState {
   users: User[];
   currentUser: User | null;
   isAuthenticated: boolean;
+  error: string | null;
 }
 
-const storedUsers: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-const storedUser: User | null = JSON.parse(
-  localStorage.getItem("currentUser") || "null"
-);
-
 const initialState: AuthState = {
-  users: storedUsers,
-  currentUser: storedUser,
-  isAuthenticated: !!storedUser,
+  users: JSON.parse(localStorage.getItem("users") || "[]"),
+  currentUser: JSON.parse(localStorage.getItem("currentUser") || "null"),
+  isAuthenticated: !!localStorage.getItem("currentUser"),
+  error: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signUp: (state, action: PayloadAction<User>) => {
-      state.users.push(action.payload);
-      localStorage.setItem("users", JSON.stringify(state.users));
-    },
-    login: (
+    loginRequest: (
       state,
       action: PayloadAction<{ userName: string; password: string }>
     ) => {
-      const user = state.users.find(
-        (u) =>
-          u.userName === action.payload.userName &&
-          u.password === action.payload.password
-      );
-      if (user) {
-        state.currentUser = user;
-        state.isAuthenticated = true;
-        localStorage.setItem("currentUser", JSON.stringify(user));
-      }
+      state.error = null;
     },
-    logout: (state) => {
+    loginSuccess: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload;
+      state.isAuthenticated = true;
+    },
+    loginFailure: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    signUpRequest: (state, action: PayloadAction<User>) => {
+      state.error = null;
+    },
+    signUpSuccess: (
+      state,
+      action: PayloadAction<{ userName: string; password: string }>
+    ) => {
+      state.error = null;
+      state.currentUser = {
+        userName: action.payload.userName,
+        password: action.payload.password,
+      } as User;
+    },
+    signUpFailure: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    logoutRequest: (state) => {
+      state.error = null;
+    },
+    logoutSuccess: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
       localStorage.removeItem("currentUser");
@@ -55,5 +65,14 @@ const authSlice = createSlice({
   },
 });
 
-export const { signUp, login, logout } = authSlice.actions;
+export const {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  signUpRequest,
+  signUpSuccess,
+  signUpFailure,
+  logoutRequest,
+  logoutSuccess,
+} = authSlice.actions;
 export default authSlice.reducer;
