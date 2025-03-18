@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
       });
       setCurrentState("Login");
     }
-  }, [currentUser]);
+  }, [currentState, currentUser, form]);
 
   useEffect(() => {
     if (isAuthenticated) {
