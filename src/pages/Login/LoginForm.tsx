@@ -60,13 +60,11 @@ const LoginForm: React.FC = () => {
     setCurrentState(currentState === "Login" ? "Sign up" : "Login");
   };
 
-  // Form UI
   return (
     <div className="login">
       <Form form={form} className="login-form" onFinish={onFinish}>
         <h2>{currentState}</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-        {/* Show signup/login errors */}
         <Form.Item
           name="userName"
           rules={[{ required: true, message: "Enter username" }]}

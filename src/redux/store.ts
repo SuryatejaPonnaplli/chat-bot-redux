@@ -15,7 +15,7 @@ const store = configureStore({
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
 });
 
-sagaMiddleware.run(rootSaga); // Run sagas
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
