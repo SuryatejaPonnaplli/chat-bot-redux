@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { logoutRequest } from "../../redux/auth/authSlice";
+import { clearMessages } from "../../redux/messages/messageSlice";
 
 const RightSideBar: React.FC = () => {
   const navigate = useNavigate();
@@ -20,10 +21,10 @@ const RightSideBar: React.FC = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const handleLogout = () => {
+    dispatch(clearMessages());
     dispatch(logoutRequest());
     navigate("/");
   };
-
   return (
     <div className="rs">
       <div className="rs-profile">

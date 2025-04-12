@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { addMessage } from "../../redux/messages/messageSlice";
+import {
+  setActiveUser,
+  clearMessages,
+  sendMessageRequest,
+} from "../../redux/messages/messageSlice";
 import { UserOutlined, SendOutlined, SearchOutlined } from "@ant-design/icons";
 import "../../styles/Chatbox.css";
 
@@ -18,63 +22,24 @@ const ChatBox: React.FC<ChatBoxProps> = ({ selectedUser }) => {
   const [messageInput, setMessageInput] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const botReplies: { [key: string]: string[] } = {
-    hi: ["Hi there! 👋", "Hello! How can I help you?", "Hey! 😊"],
-    how: [
-      "I'm just a bot, but I'm here to help!",
-      "I'm doing great! How about you?",
-    ],
-    help: [
-      "Sure! What do you need help with?",
-      "I'm here to assist. Ask me anything!",
-    ],
-    bye: ["Goodbye! Have a great day!", "See you soon! 👋"],
-    default: [
-      "I'm not sure I understand. Can you rephrase that?",
-      "Hmm... Can you clarify? 🤔",
-    ],
-  };
-
-  const getBotReply = (message: string): string => {
-    message = message.toLowerCase();
-    for (let key in botReplies) {
-      if (message.includes(key)) {
-        const responses = botReplies[key];
-        return responses[Math.floor(Math.random() * responses.length)];
-      }
+  useEffect(() => {
+    if (selectedUser) {
+      dispatch(setActiveUser(selectedUser));
     }
-    const defaultResponses = botReplies["default"];
-    return defaultResponses[
-      Math.floor(Math.random() * defaultResponses.length)
-    ];
-  };
+  }, [selectedUser, dispatch]);
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!currentUser || !selectedUser || messageInput.trim() === "") return;
+
     dispatch(
-      addMessage({
+      sendMessageRequest({
         user: selectedUser,
-        message: {
-          sender: currentUser.userName,
-          content: messageInput.trim(),
-        },
+        message: { sender: currentUser.userName, content: messageInput.trim() },
       })
     );
-    const userMessage = messageInput.trim();
+
     setMessageInput("");
-    setTimeout(() => {
-      const botResponse = getBotReply(userMessage);
-      dispatch(
-        addMessage({
-          user: selectedUser,
-          message: {
-            sender: selectedUser,
-            content: botResponse,
-          },
-        })
-      );
-    }, 1000);
   };
 
   const filteredMessages = messages.filter((msg) =>
